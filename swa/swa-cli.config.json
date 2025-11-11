@@ -1,0 +1,13 @@
+{
+  "$schema": "https://aka.ms/azure/static-web-apps-cli/schema",
+  "configurations": {
+    "swa": {
+      "appLocation": ".",
+      "apiLocation": "api",
+      "outputLocation": ".next",
+      "appDevserverUrl": "http://localhost:3000",
+      "host": "localhost",
+      "port": 4280
+    }
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "name": "Azure Static Web App with Functions",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:1-20-bullseye",
+  
+  "features": {
+    "ghcr.io/devcontainers/features/azure-cli:1": {},
+    "ghcr.io/devcontainers/features/node:1": {
+      "nodeGypDependencies": true,
+      "version": "20"
+    },
+    "ghcr.io/devcontainers/features/git:1": {}
+  },
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-vscode.vscode-node-azure-pack",
+        "ms-azuretools.vscode-azurefunctions",
+        "ms-azuretools.vscode-azurestaticwebapps",
+        "azurite.azurite",
+        "bradlc.vscode-tailwindcss",
+        "esbenp.prettier-vscode",
+        "ms-vscode.vscode-json"
+      ],
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "bash"
+      }
+    }
+  },
+
+  "containerEnv": {
+    "WATCHPACK_POLLING": "true",
+    "CHOKIDAR_USEPOLLING": "true"
+  },
+
+  "forwardPorts": [3000, 4280, 7071, 10000, 10001, 10002],
+  "portsAttributes": {
+    "3000": {
+      "label": "Frontend Dev Server",
+      "onAutoForward": "notify"
+    },
+    "4280": {
+      "label": "Static Web Apps CLI",
+      "onAutoForward": "notify"
+    },
+    "7071": {
+      "label": "Azure Functions Core Tools",
+      "onAutoForward": "notify"
+    },
+    "10000": {
+      "label": "Azurite Blob Service",
+      "onAutoForward": "notify"
+    },
+    "10001": {
+      "label": "Azurite Queue Service",
+      "onAutoForward": "notify"
+    },
+    "10002": {
+      "label": "Azurite Table Service",
+      "onAutoForward": "notify"
+    }
+  },
+  "postCreateCommand": "npm install -g @azure/static-web-apps-cli azure-functions-core-tools@4 azurite --unsafe-perm=true",
+  "remoteUser": "node"
+}
