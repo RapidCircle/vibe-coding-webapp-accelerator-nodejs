@@ -2,15 +2,16 @@
   "name": "vibecodingdemo-api",
   "version": "1.0.0",
   "description": "Azure Functions API for VibeCodingDemo",
+  "main": "index.js",
   "scripts": {
     "start": "func start",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "@azure/functions": "^4.0.0"
+    "@azure/functions": "^4.9.0"
   },
   "devDependencies": {
-    "azure-functions-core-tools": "^4.0.0"
+    "azure-functions-core-tools": "^4.5.0"
   },
   "engines": {
     "node": ">=18.0.0"

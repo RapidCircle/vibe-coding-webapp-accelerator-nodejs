@@ -53,11 +53,11 @@ You are an expert AI developer working in a structured web app codebase.
   - ✅ `/customers/customer/{id}/orders` - customer's orders
   - ❌ `/transactions-settings` - avoid hyphenated compound endpoints
   - ❌ `/customer-orders` - avoid flattened resource names
-- API Endpoints: Always use the route definition from function.json, not the folder name, when calling API endpoints:
-  - ✅ Use the "route" property from function.json as the actual endpoint URL
+- API Endpoints: Always use the route definition from the code, not the folder name, when calling API endpoints:
+  - ✅ Use the "route" property defined in the function code as the actual endpoint URL
   - ✅ `/api/transactions/transaction/{id}` - if defined in route property
   - ❌ `/api/GetTransaction/{id}` - don't use folder name as endpoint
-  - The folder name (e.g., `GetTransaction`) is for organization only; the actual callable endpoint is defined by the route configuration
+  - The folder name (e.g., `getTransaction`) is for organization only; the actual callable endpoint is defined by the route in code
 - Folder Structure: Organize React files with clear separation of concerns:
   ```
   swa/app/
@@ -74,18 +74,22 @@ You are an expert AI developer working in a structured web app codebase.
     ├── types/            # TypeScript type definitions
     └── constants/        # Application constants and enums
   ```
-- API Folder Structure: Organize Azure Functions with clear separation by domain:
+- API Folder Structure: Organize Azure Functions v4 with clear separation by domain:
   ```
   swa/api/
-    ├── GetTransaction/       # Individual function folder
-    │   ├── index.js         # Function handler
-    │   └── function.json    # Function configuration
-    ├── GetTransactionSettings/
-    │   ├── index.js
-    │   └── function.json
-    ├── GetCustomer/
-    │   ├── index.js
-    │   └── function.json
+    ├── index.js          # Entry point that imports all functions
+    ├── transactions/     # Domain-grouped functions
+    │   ├── getTransaction/
+    │   │   └── index.js      # route: 'transactions/transaction/{id}'
+    │   └── getSettings/
+    │       └── index.js      # route: 'transactions/settings'
+    ├── customers/
+    │   ├── getCustomer/
+    │   │   └── index.js      # route: 'customers/customer/{id}'
+    │   └── getOrders/
+    │       └── index.js      # route: 'customers/customer/{id}/orders'
+    ├── helloWorld/
+    │   └── index.js          # route: 'helloWorld'
     ├── services/         # Business logic and data access
     │   ├── storage/      # Azure Storage operations
     │   ├── validation/   # Input validation
@@ -93,11 +97,18 @@ You are an expert AI developer working in a structured web app codebase.
     ├── models/           # Data models and types
     ├── utils/            # Pure utility functions
     ├── config/           # Configuration and constants
-    ├── package.json      # Node.js dependencies and scripts
+    ├── package.json      # Node.js dependencies (main: "index.js")
     ├── host.json         # Azure Functions host configuration
     └── local.settings.json   # Local development settings
   ```
-- ❌ do not use a src folder and app.js file in the api/ directory
+- ✅ Use Azure Functions v4 programming model with code-centric configuration
+- ✅ Each function lives in its own folder at the api root with an `index.js` file
+- ✅ Group related functions in domain folders (transactions/, customers/, etc.)
+- ✅ Define routes in code using `app.http()` - no function.json files needed
+- ✅ Require all function folders in the root `index.js` file
+- ✅ Set `"main": "index.js"` in package.json
+- ❌ Do not use function.json files (v3 model)
+- ❌ Do not nest functions in a src/ directory (breaks auto-discovery)
 
 🧪 Testing:
 - You do not need to write automated tests unless requested.
