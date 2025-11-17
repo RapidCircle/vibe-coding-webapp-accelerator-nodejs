@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "concurrently \"npm run dev:azurite\" \"npm run dev:swa\"",
-    "dev:swa": "WATCHPACK_POLLING=true CHOKIDAR_USEPOLLING=true swa start http://localhost:3000 --api-location api --host localhost --port 4280 --run \"next dev\"",
+    "dev:swa": "WATCHPACK_POLLING=true CHOKIDAR_USEPOLLING=true swa start http://localhost:3000 --api-location api --host localhost --port 4280 --run \"next dev --webpack\"",
     "dev:azurite": "azurite",
     "build": "next build",
     "build:api": "cd api && npm install",
